@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { UserControllers } from "./user.controller";
 import { validateRequest } from "../../middlewares/validatedRequest";
-import { createUserZodSchema } from "./user.validationl";
+import { createUserZodSchema, updateUserZodSchema } from "./user.validationl";
 import AppError from "../../errorHelpers/AppErrors";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Role } from "./user.interface";
@@ -21,4 +21,11 @@ router.get(
   checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
   UserControllers.getAllUsers
 );
+router.patch(
+  "/:id",
+  validateRequest(updateUserZodSchema),
+  checkAuth(...Object.values(Role)),
+  UserControllers.updateUser
+);
+// /api/v1/user/:id
 export const UserRoutes = router;
