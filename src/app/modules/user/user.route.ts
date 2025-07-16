@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { UserControllers } from "./user.controller";
 import { validateRequest } from "../../middlewares/validatedRequest";
-import { createUserZodSchema, updateUserZodSchema } from "./user.validationl";
+import { createUserZodSchema, updateUserZodSchema } from "./user.validation";
 import AppError from "../../errorHelpers/AppErrors";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Role } from "./user.interface";
