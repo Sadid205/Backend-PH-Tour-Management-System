@@ -32,7 +32,10 @@ router.delete(
   checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
   TourTypeControllers.deleteTourType
 );
+
+
 // Tour routes
+
 router.get(
   "/",
   checkAuth(Role.ADMIN, Role.SUPER_ADMIN),

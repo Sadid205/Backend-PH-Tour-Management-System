@@ -40,10 +40,16 @@ const tourCreateZodSchema = z.object({
     .number({ invalid_type_error: "Cost must be a number" })
     .optional(),
   startDate: z
-    .date({ invalid_type_error: "Start date must be a valid date" })
+    .preprocess(
+      (val) => new Date(val as string),
+      z.date({ invalid_type_error: "Start date must be a valid date" })
+    )
     .optional(),
   endDate: z
-    .date({ invalid_type_error: "End date must be a valid date" })
+    .preprocess(
+      (val) => new Date(val as string),
+      z.date({ invalid_type_error: "End date must be a valid date" })
+    )
     .optional(),
   included: z
     .array(

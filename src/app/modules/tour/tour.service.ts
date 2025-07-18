@@ -4,6 +4,7 @@ import httpStatus from "http-status-codes";
 import { ITour, ITourType } from "./tour.interface";
 import { Tour, TourType } from "./tour.model";
 import { Division } from "../division/division.model";
+import { tourSearchableFields } from "./tour.constant";
 
 // Tour Type Services
 const getAllTourType = async (): Promise<Partial<ITourType[]>> => {
@@ -48,9 +49,28 @@ const deleteTourType = async (tourTypeId: string): Promise<void> => {
 
 // Tour Services
 
-const getAllTour = async (): Promise<Partial<ITour[]>> => {
-  const Tours = await Tour.find({});
-  return Tours;
+const getAllTour = async (query: Record<string, string>) => {
+  const filter = { ...query };
+  const searchTerm = query.searchTerm || "";
+  delete filter["searchTerm"];
+  const searchQuery = {
+    //title: { $regex: searchTerm, $options: "i" },
+    $or: tourSearchableFields.map((field) => ({
+      [field]: { $regex: searchTerm, $options: "i" },
+    })),
+  };
+  const tours = await Tour.find(searchQuery).find(filter);
+  const totalTours = await Tour.countDocuments();
+
+  // location = Dhaka
+  // search = Golf
+
+  return {
+    data: tours,
+    meta: {
+      total: totalTours,
+    },
+  };
 };
 
 const createTour = async (payload: Partial<ITour>): Promise<Partial<ITour>> => {
@@ -64,9 +84,8 @@ const createTour = async (payload: Partial<ITour>): Promise<Partial<ITour>> => {
   if (!isDivisionExist) {
     throw new AppError(httpStatus.NOT_FOUND, "Division Type Not Found");
   }
-  const slugText = title?.split(" ").join("-").toLowerCase();
 
-  const isTourExist = await Tour.findOne({ slug: slugText });
+  const isTourExist = await Tour.findOne({ title: title });
   if (isTourExist) {
     throw new AppError(httpStatus.BAD_REQUEST, "Tour Already Exist");
   }
@@ -74,7 +93,6 @@ const createTour = async (payload: Partial<ITour>): Promise<Partial<ITour>> => {
     title,
     division,
     tourType,
-    slug: slugText,
     ...rest,
   });
   return tour;
@@ -98,9 +116,6 @@ const updateTour = async (
     }
   }
 
-  if (payload.title) {
-    updatedPayload.slug = payload.title.split(" ").join("-").toLowerCase();
-  }
   const isTourExist = await Tour.findById(tourId);
   if (!isTourExist) {
     throw new AppError(httpStatus.NOT_FOUND, "Tour Not Found");

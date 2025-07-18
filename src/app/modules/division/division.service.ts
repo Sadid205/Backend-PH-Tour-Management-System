@@ -2,24 +2,27 @@ import AppError from "../../errorHelpers/AppErrors";
 import { Division } from "./division.model";
 import httpStatus from "http-status-codes";
 
-const getAllDivision = async (): Promise<Partial<IDivision[]>> => {
+const getAllDivision = async () => {
   const divisions = await Division.find({});
-  return divisions;
+  const totalDivisions = await Division.countDocuments({});
+  return {
+    data: divisions,
+    meta: {
+      total: totalDivisions,
+    },
+  };
 };
 const createDivision = async (
   payload: Partial<IDivision>
 ): Promise<Partial<IDivision>> => {
   const { name, ...rest } = payload;
 
-  const slugText = name?.split(" ").join("-").toLowerCase();
-
-  const isDivisionExist = await Division.findOne({ slug: slugText });
+  const isDivisionExist = await Division.findOne({ name: name });
   if (isDivisionExist) {
     throw new AppError(httpStatus.BAD_REQUEST, "Division Already Exist");
   }
   const division = await Division.create({
     name,
-    slug: slugText,
     ...rest,
   });
   return division;
@@ -30,18 +33,30 @@ const updateDivision = async (
   divisionId: string
 ): Promise<Partial<IDivision>> => {
   const updatedPayload = { ...payload };
-  if (payload.name) {
-    updatedPayload.slug = payload.name.split(" ").join("-").toLowerCase();
-  }
+
   const isDivisionExist = await Division.findById(divisionId);
   if (!isDivisionExist) {
     throw new AppError(httpStatus.NOT_FOUND, "Division Not Found");
   }
+
+  const duplicateDivision = await Division.findOne({
+    name: payload.name ? payload.name : isDivisionExist.name,
+    _id: { $ne: divisionId },
+  });
+
+  if (duplicateDivision) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "Division Already Exist With This Name"
+    );
+  }
+
   const updatedDivision = await Division.findByIdAndUpdate(
     divisionId,
     updatedPayload,
     {
       new: true,
+      runValidators: true,
     }
   );
   return updatedDivision!;
