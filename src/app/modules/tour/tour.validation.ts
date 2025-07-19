@@ -51,6 +51,12 @@ const tourCreateZodSchema = z.object({
       z.date({ invalid_type_error: "End date must be a valid date" })
     )
     .optional(),
+  departureLocation: z
+    .string({ invalid_type_error: "Departure location must be string" })
+    .optional(),
+  arrivalLocation: z
+    .string({ invalid_type_error: "Arrival location must be string" })
+    .optional(),
   included: z
     .array(
       z.string({ invalid_type_error: "Each included item must be a string" })

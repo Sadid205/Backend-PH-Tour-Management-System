@@ -1,15 +1,29 @@
 import AppError from "../../errorHelpers/AppErrors";
+import { QueryBuilder } from "../../utils/queryBuilder";
+import { divisionSearchableFields } from "./division.constant";
 import { Division } from "./division.model";
 import httpStatus from "http-status-codes";
 
-const getAllDivision = async () => {
-  const divisions = await Division.find({});
-  const totalDivisions = await Division.countDocuments({});
+const getAllDivision = async (query: Record<string, string>) => {
+  const queryBuilder = new QueryBuilder(Division.find(), query);
+  const divisions = queryBuilder
+    .search(divisionSearchableFields)
+    .filter()
+    .sort()
+    .paginate();
+  const [data, meta] = await Promise.all([
+    divisions.build(),
+    queryBuilder.getMeta(),
+  ]);
+  return {
+    data,
+    meta,
+  };
+};
+const getSingleDivision = async (slug: string) => {
+  const divisions = await Division.findOne({ slug: slug });
   return {
     data: divisions,
-    meta: {
-      total: totalDivisions,
-    },
   };
 };
 const createDivision = async (
@@ -74,4 +88,5 @@ export const DivisoinServices = {
   createDivision,
   updateDivision,
   deleteDivision,
+  getSingleDivision,
 };

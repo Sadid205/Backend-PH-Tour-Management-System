@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 
-export interface ITourType{
-    name: string;
+export interface ITourType {
+  name: string;
 }
 
 export interface ITour {
@@ -12,6 +12,8 @@ export interface ITour {
   location?: string;
   costForm?: number;
   startDate?: Date;
+  departureLocation?: string;
+  arrivalLocation?: string;
   endDate?: Date;
   included?: string[];
   excluded?: string[];

@@ -10,18 +10,18 @@ import { Role } from "../user/user.interface";
 
 const router = Router();
 
-router.get(
-  "/",
-  checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
-  DivisionControllers.getAllDivision
-);
-
 router.post(
   "/create",
   checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
   validateRequest(createDivisionZodSchema),
   DivisionControllers.createDivision
 );
+router.get(
+  "/",
+  checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
+  DivisionControllers.getAllDivision
+);
+router.get("/:slug", DivisionControllers.getSingleDivision);
 router.patch(
   "/:id",
   checkAuth(Role.ADMIN, Role.SUPER_ADMIN),

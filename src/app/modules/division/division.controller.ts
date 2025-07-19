@@ -6,12 +6,27 @@ import httpStatus from "http-status-codes";
 
 const getAllDivision = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const divisions = await DivisoinServices.getAllDivision();
+    const query = req.query;
+    const divisions = await DivisoinServices.getAllDivision(
+      query as Record<string, string>
+    );
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: "Division retrieve successfully",
       data: divisions,
+    });
+  }
+);
+const getSingleDivision = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const slug = req.params.slug;
+    const division = await DivisoinServices.getSingleDivision(slug);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Division retrieve successfully",
+      data: division,
     });
   }
 );
@@ -57,4 +72,5 @@ export const DivisionControllers = {
   createDivision,
   updateDivision,
   deleteDivision,
+  getSingleDivision,
 };

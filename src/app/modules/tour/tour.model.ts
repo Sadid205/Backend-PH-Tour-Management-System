@@ -20,6 +20,8 @@ const tourSchema = new Schema<ITour>(
     location: { type: String },
     costForm: { type: Number },
     startDate: { type: Date },
+    departureLocation: { type: String },
+    arrivalLocation: { type: String },
     endDate: { type: Date },
     included: { type: [String], default: [] },
     excluded: { type: [String], default: [] },
@@ -30,7 +32,7 @@ const tourSchema = new Schema<ITour>(
     division: { type: Schema.Types.ObjectId, ref: "Division", required: true },
     tourType: { type: Schema.Types.ObjectId, ref: "TourType", required: true },
   },
-  { timestamps: true }
+  { timestamps: true, versionKey: false }
 );
 
 tourSchema.pre("save", async function (next) {
