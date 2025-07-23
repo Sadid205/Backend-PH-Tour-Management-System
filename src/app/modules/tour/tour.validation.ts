@@ -89,6 +89,7 @@ const tourCreateZodSchema = z.object({
   tourType: z
     .string({ required_error: "Tour ID is required" })
     .regex(/^[0-9a-fA-F]{24}$/, "Tour ID must be a valid MongoDB ObjectId"),
+  deleteImages: z.array(z.string()).optional(),
 });
 
 const tourUpdateZodSchema = tourCreateZodSchema.partial();

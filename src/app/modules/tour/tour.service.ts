@@ -8,6 +8,7 @@ import { tourSearchableFields } from "./tour.constant";
 import { excludeField } from "../../constant";
 import { Query } from "mongoose";
 import { QueryBuilder } from "../../utils/queryBuilder";
+import { deleteImageFromCloudinary } from "../../config/cloudinary.config";
 
 // Tour Type Services
 const getAllTourType = async (): Promise<Partial<ITourType[]>> => {
@@ -184,9 +185,33 @@ const updateTour = async (
   ) {
     updatedPayload.images = [...updatedPayload.images, ...isTourExist.images];
   }
+  if (
+    updatedPayload.deleteImages &&
+    updatedPayload.deleteImages.length > 0 &&
+    isTourExist.images &&
+    isTourExist.images.length > 0
+  ) {
+    const restDBImages = isTourExist.images.filter(
+      (imageURL) => !updatedPayload.deleteImages?.includes(imageURL)
+    );
+    const updatedPayloadImages = (updatedPayload.images || [])
+      .filter((imageURL) => !updatedPayload.deleteImages?.includes(imageURL))
+      .filter((imageURL) => !restDBImages.includes(imageURL));
+    updatedPayload.images = [...restDBImages, ...updatedPayloadImages];
+  }
   const updatedTour = await Tour.findByIdAndUpdate(tourId, updatedPayload, {
     new: true,
   });
+  if (
+    updatedPayload.deleteImages &&
+    updatedPayload.deleteImages.length > 0 &&
+    isTourExist.images &&
+    isTourExist.images.length > 0
+  ) {
+    await Promise.all(
+      updatedPayload.deleteImages.map((url) => deleteImageFromCloudinary(url))
+    );
+  }
   return updatedTour!;
 };
 
