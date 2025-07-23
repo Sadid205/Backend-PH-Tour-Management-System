@@ -3,6 +3,7 @@ import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status-codes";
 import { TourServices, TourTypeServices } from "./tour.service";
+import { ITour } from "./tour.interface";
 
 // Tour Type Controllers
 const getAllTourType = catchAsync(
@@ -70,7 +71,11 @@ const getAllTour = catchAsync(
 );
 const createTour = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const TourData = await TourServices.createTour(req.body);
+    const payload: ITour = {
+      ...req.body,
+      images: (req.files as Express.Multer.File[]).map((file) => file.path),
+    };
+    const TourData = await TourServices.createTour(payload);
     sendResponse(res, {
       statusCode: httpStatus.CREATED,
       success: true,
@@ -81,7 +86,11 @@ const createTour = catchAsync(
 );
 const updateTour = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const TourData = await TourServices.updateTour(req.body, req.params.id);
+    const payload: ITour = {
+      ...req.body,
+      images: (req.files as Express.Multer.File[]).map((file) => file.path),
+    };
+    const TourData = await TourServices.updateTour(payload, req.params.id);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

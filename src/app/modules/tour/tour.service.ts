@@ -176,6 +176,14 @@ const updateTour = async (
   if (!isTourExist) {
     throw new AppError(httpStatus.NOT_FOUND, "Tour Not Found");
   }
+  if (
+    updatedPayload.images &&
+    updatedPayload.images.length > 0 &&
+    isTourExist.images &&
+    isTourExist.images.length > 0
+  ) {
+    updatedPayload.images = [...updatedPayload.images, ...isTourExist.images];
+  }
   const updatedTour = await Tour.findByIdAndUpdate(tourId, updatedPayload, {
     new: true,
   });
