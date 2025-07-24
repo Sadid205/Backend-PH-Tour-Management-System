@@ -25,16 +25,12 @@ router.post(
   checkAuth(...Object.values(Role)),
   AuthControllers.setPassword
 );
-router.post(
-  "/forgote-password",
-  checkAuth(...Object.values(Role)),
-  AuthControllers.forgotPassword
-);
+router.post("/forgot-password", AuthControllers.forgotPassword);
 // Frontend -> forgot-password -> email -> user status check -> short expiration token (valid for 10 min) -> email -> Frontend Link http://localhost:5073/reset-password?email=sadid@gmail.com&token=token -> frontend e query theke  user er email and token extract kore anbo -> new password user thek nibe -> backend er /reset-password api -> authorization = token -> newPassword -> token verify -> hash password-> save user password
 router.post(
-  "/set-password",
+  "/reset-password",
   checkAuth(...Object.values(Role)),
-  AuthControllers.setPassword
+  AuthControllers.resetPassword
 );
 // /booking -> /login -> successful google login -> /booking frontend
 // /login -> successfull google login -> /frontend

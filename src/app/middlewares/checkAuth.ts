@@ -37,7 +37,7 @@ export const checkAuth =
       if (isUserExist.isDeleted) {
         throw new AppError(httpStatus.BAD_REQUEST, "User is deleted");
       }
-      if (isUserExist.isVerified) {
+      if (!isUserExist.isVerified) {
         throw new AppError(httpStatus.BAD_REQUEST, "User is not verified");
       }
       // authRoles = ["ADMIN","SUPER_AMIN"].includes("ADMIN")
