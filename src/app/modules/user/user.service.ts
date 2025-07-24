@@ -44,6 +44,13 @@ const getAllUsers = async () => {
     },
   };
 };
+const getMe = async (userId: string) => {
+  const user = await User.findById(userId).select("-password");
+
+  return {
+    data: user,
+  };
+};
 
 const updateUser = async (
   userId: string,
@@ -92,4 +99,5 @@ export const UserServices = {
   createUser,
   getAllUsers,
   updateUser,
+  getMe,
 };

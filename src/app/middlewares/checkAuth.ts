@@ -37,10 +37,14 @@ export const checkAuth =
       if (isUserExist.isDeleted) {
         throw new AppError(httpStatus.BAD_REQUEST, "User is deleted");
       }
+      if (isUserExist.isVerified) {
+        throw new AppError(httpStatus.BAD_REQUEST, "User is not verified");
+      }
       // authRoles = ["ADMIN","SUPER_AMIN"].includes("ADMIN")
       if (!authRoles.includes(verifiedToken.role)) {
         throw new AppError(403, "You are not permitted to view this route!!");
       }
+
       req.user = verifiedToken;
       next();
     } catch (error) {

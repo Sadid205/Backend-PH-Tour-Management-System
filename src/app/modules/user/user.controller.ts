@@ -68,7 +68,25 @@ const getAllUsers = catchAsync(
       statusCode: httpStatus.CREATED,
       message: "All Users Retrieve successfully",
       data: result.data,
-      meta: result.meta,
+      // meta: {
+      //   limit: 0,
+      //   page: 0,
+      //   total: 0,
+      //   totalPage: 0,
+      // },
+    });
+  }
+);
+const getMe = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const decodedToken = req.user as JwtPayload;
+    const result = await UserServices.getMe(decodedToken.userId);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "Your Profile Retrieve successfully",
+      data: result.data,
     });
   }
 );
@@ -76,6 +94,7 @@ export const UserControllers = {
   createUser,
   updateUser,
   getAllUsers,
+  getMe,
 };
 
 // route matching -> controller -> service -> model -> DB
