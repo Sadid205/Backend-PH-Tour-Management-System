@@ -1,7 +1,8 @@
 // Amader Folder -> image -> Form data -> File -> Multer -> Amader project / pc te  Nijer ekta folder(temporary) -> Req.file
-import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 import { envVars } from "./env";
 import AppError from "../errorHelpers/AppErrors";
+import stream from "stream";
 
 // req.file -> Cloudinary(req.file) -> url -> mongoose -> mongodb
 
@@ -28,6 +29,37 @@ export const deleteImageFromCloudinary = async (url: string) => {
     }
   } catch (error: any) {
     throw new AppError(401, "Cloudinary image deletion failed", error.message);
+  }
+};
+
+export const uploadBufferToCloudinary = async (
+  buffer: Buffer,
+  fileName: string
+): Promise<UploadApiResponse> => {
+  try {
+    return new Promise((resolve, reject) => {
+      const public_id = `pdf-${fileName}-${Date.now()}`;
+      // const bufferStream = new stream.PassThrough();
+      // bufferStream.end(buffer);
+      cloudinary.uploader
+        .upload_stream(
+          {
+            resource_type: "auto",
+            public_id: public_id,
+            folder: "pdf",
+          },
+          (error, result) => {
+            if (error) {
+              return reject(error);
+            }
+            resolve(result as UploadApiResponse);
+          }
+        )
+        .end(buffer);
+    });
+  } catch (error: any) {
+    console.log(error);
+    throw new AppError(401, `Error uploading file ${error.message}`);
   }
 };
 
