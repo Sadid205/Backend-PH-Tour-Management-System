@@ -1,3 +1,4 @@
+// @typescript-eslint/no-non-null-assertion
 import { deleteImageFromCloudinary } from "../../config/cloudinary.config";
 import AppError from "../../errorHelpers/AppErrors";
 import { QueryBuilder } from "../../utils/queryBuilder";

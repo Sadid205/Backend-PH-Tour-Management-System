@@ -1,3 +1,4 @@
+import mongoose, { Types } from "mongoose";
 import { envVars } from "../config/env";
 import { IAuthProvider, IUser, Role } from "../modules/user/user.interface";
 import { User } from "../modules/user/user.model";
@@ -22,6 +23,7 @@ export const seedSuperAdmin = async () => {
       providerId: envVars.SUPER_ADMIN_EMAIL,
     };
     const payload: IUser = {
+      _id: new Types.ObjectId(),
       name: "Super admin",
       role: Role.SUPER_ADMIN,
       email: envVars.SUPER_ADMIN_EMAIL,

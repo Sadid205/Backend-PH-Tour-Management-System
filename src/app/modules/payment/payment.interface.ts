@@ -1,3 +1,4 @@
+// @typescript-eslint/no-explicit-any
 import { Types } from "mongoose";
 
 export enum PAYMENT_STATUS {

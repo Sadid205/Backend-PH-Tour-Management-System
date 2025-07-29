@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import z from "zod";
 
 const tourTypeCreateZodSchema = z.object({

@@ -1,8 +1,8 @@
 // Amader Folder -> image -> Form data -> File -> Multer -> Amader project / pc te  Nijer ekta folder(temporary) -> Req.file
+// @typescript-eslint/no-explicit-any
 import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 import { envVars } from "./env";
 import AppError from "../errorHelpers/AppErrors";
-import stream from "stream";
 
 // req.file -> Cloudinary(req.file) -> url -> mongoose -> mongodb
 

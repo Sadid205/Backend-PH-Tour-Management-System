@@ -1,8 +1,10 @@
+// no-sparse-arrays
+// @typescript-eslint/no-explicit-any
 import { Booking } from "../booking/booking.model";
 import { PAYMENT_STATUS } from "../payment/payment.interface";
 import { Payment } from "../payment/payment.model";
 import { Tour } from "../tour/tour.model";
-import { IsActive, IUser } from "../user/user.interface";
+import { IsActive } from "../user/user.interface";
 import { User } from "../user/user.model";
 
 const now = new Date();

@@ -1,3 +1,4 @@
+// @typescript-eslint/no-unused-vars
 import { NextFunction, Request, Response, Router } from "express";
 import { UserControllers } from "./user.controller";
 import { validateRequest } from "../../middlewares/validatedRequest";
@@ -29,6 +30,10 @@ router.patch(
   checkAuth(...Object.values(Role)),
   UserControllers.updateUser
 );
-router.get("/:id", checkAuth(Role.ADMIN, Role.SUPER_ADMIN), UserControllers.getSingleUser)
+router.get(
+  "/:id",
+  checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
+  UserControllers.getSingleUser
+);
 // /api/v1/user/:id
 export const UserRoutes = router;

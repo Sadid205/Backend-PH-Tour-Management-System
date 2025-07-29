@@ -1,15 +1,13 @@
+//@typescript-eslint/no-explicit-any
+// @typescript-eslint/no-non-null-assertion
 import AppError from "../../errorHelpers/AppErrors";
 import { User } from "../user/user.model";
 import httpStatus from "http-status-codes";
-import bcryptjs, { hashSync } from "bcryptjs";
+import bcryptjs from "bcryptjs";
 import { IAuthProvider, IsActive, IUser } from "../user/user.interface";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { generateToken, verifyToken } from "../../utils/jtw";
 import { envVars } from "../../config/env";
-import {
-  createNewAccessTokenWithRefreshToken,
-  createUserTokens,
-} from "../../utils/userTokens";
+import { createNewAccessTokenWithRefreshToken } from "../../utils/userTokens";
 import { sendEmail } from "../../utils/sendEmail";
 // const credentialsLogin = async (payload: Partial<IUser>) => {
 //   const { email, password } = payload;

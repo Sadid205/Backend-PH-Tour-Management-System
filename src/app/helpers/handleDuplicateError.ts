@@ -1,3 +1,4 @@
+//@typescript-eslint/no-explicit-any
 import { TGenericErrorResponse } from "../interfaces/error.types";
 
 export const handleDuplicateKeyError = (err: any): TGenericErrorResponse => {

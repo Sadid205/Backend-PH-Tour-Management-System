@@ -1,3 +1,4 @@
+// @typescript-eslint/no-explicit-any
 import mongoose from "mongoose";
 import {
   TErrorSources,
@@ -7,7 +8,7 @@ import {
 export const handleValidationError = (
   err: mongoose.Error.ValidationError
 ): TGenericErrorResponse => {
-  let errorSources: TErrorSources[] = [];
+  const errorSources: TErrorSources[] = [];
   const errors = Object.values(err.errors);
 
   errors.forEach((errorObject: any) =>

@@ -34,16 +34,13 @@ router.post(
 );
 // /booking -> /login -> successful google login -> /booking frontend
 // /login -> successfull google login -> /frontend
-router.get(
-  "/google",
-  async (req: Request, res: Response, next: NextFunction) => {
-    const redirect = req.query.redirect || "/";
-    passport.authenticate("google", {
-      scope: ["profile", "email"],
-      state: redirect as string,
-    })(req, res);
-  }
-);
+router.get("/google", async (req: Request, res: Response) => {
+  const redirect = req.query.redirect || "/";
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    state: redirect as string,
+  })(req, res);
+});
 // /api/v1/auth/google/callback?state=/booking
 router.get(
   "/google/callback",

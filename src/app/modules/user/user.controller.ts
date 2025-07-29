@@ -1,13 +1,11 @@
+// @typescript-eslint/no-unused-vars
+// @typescript-eslint/no-non-null-assertion
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status-codes";
-import { User } from "./user.model";
 import { UserServices } from "./user.service";
-import AppError from "../../errorHelpers/AppErrors";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import { IUser } from "./user.interface";
-import { verifyToken } from "../../utils/jtw";
-import { envVars } from "../../config/env";
 import { JwtPayload } from "jsonwebtoken";
 
 const createUser = catchAsync(

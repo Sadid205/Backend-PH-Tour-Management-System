@@ -1,3 +1,5 @@
+//  @typescript-eslint/no-non-null-assertion
+// @typescript-eslint/no-explicit-any
 import AppError from "../../errorHelpers/AppErrors";
 import { User } from "../user/user.model";
 import { BOOKING_STATUS, IBooking } from "./booking.interface";

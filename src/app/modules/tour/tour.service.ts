@@ -1,3 +1,4 @@
+// @typescript-eslint/no-non-null-assertion
 import AppError from "../../errorHelpers/AppErrors";
 // import { TourType } from "./TourType.model";
 import httpStatus from "http-status-codes";
@@ -5,8 +6,6 @@ import { ITour, ITourType } from "./tour.interface";
 import { Tour, TourType } from "./tour.model";
 import { Division } from "../division/division.model";
 import { tourSearchableFields } from "./tour.constant";
-import { excludeField } from "../../constant";
-import { Query } from "mongoose";
 import { QueryBuilder } from "../../utils/queryBuilder";
 import { deleteImageFromCloudinary } from "../../config/cloudinary.config";
 

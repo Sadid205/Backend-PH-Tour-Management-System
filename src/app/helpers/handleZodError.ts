@@ -1,3 +1,4 @@
+// @typescript-eslint/no-explicit-any
 import {
   TErrorSources,
   TGenericErrorResponse,

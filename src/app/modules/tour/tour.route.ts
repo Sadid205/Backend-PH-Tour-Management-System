@@ -4,7 +4,6 @@ import { Role } from "../user/user.interface";
 import { TourControllers, TourTypeControllers } from "./tour.controller";
 import { validateRequest } from "../../middlewares/validatedRequest";
 import { TourTypeValidation, TourValidation } from "./tour.validation";
-import { Tour } from "./tour.model";
 import { multerUpload } from "../../config/multer.config";
 
 const router = Router();

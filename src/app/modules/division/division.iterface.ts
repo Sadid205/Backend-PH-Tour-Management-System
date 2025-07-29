@@ -1,3 +1,4 @@
+// @typescript-eslint/no-unused-vars
 interface IDivision {
   name: string;
   slug: string;

@@ -1,3 +1,4 @@
+// @typescript-eslint/no-explicit-any
 import passport from "passport";
 import {
   Strategy as GoogleStrategy,
@@ -9,8 +10,6 @@ import { User } from "../modules/user/user.model";
 import { IsActive, Role } from "../modules/user/user.interface";
 import bcryptjs from "bcryptjs";
 import { Strategy as LocalStrategy } from "passport-local";
-import httpStatus from "http-status-codes";
-import AppError from "../errorHelpers/AppErrors";
 
 passport.use(
   new LocalStrategy(

@@ -1,9 +1,11 @@
+//  @typescript-eslint/no-unused-vars
 import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../../utils/catchAsync";
 import { PaymentService } from "./payment.service";
 import { envVars } from "../../config/env";
 import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status-codes";
+import { SSLService } from "../../sslCommerz/sslCommerz.service";
 
 const successPayment = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -69,6 +71,18 @@ const getInvoiceDownloadUrl = catchAsync(
     });
   }
 );
+const validatePayment = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    console.log("sslcommerz ipn url body", req.body);
+    await SSLService.validatePayment(req.body);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "Payment validated Successfully",
+      data: null,
+    });
+  }
+);
 
 export const PaymentController = {
   initPayment,
@@ -76,4 +90,5 @@ export const PaymentController = {
   failPayment,
   cancelPayment,
   getInvoiceDownloadUrl,
+  validatePayment,
 };

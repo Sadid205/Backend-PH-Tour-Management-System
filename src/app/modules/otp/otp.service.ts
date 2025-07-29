@@ -13,7 +13,7 @@ const generateOTP = (length = 6) => {
   return otp;
 };
 
-const sendOTP = async (email: string, name: string, phone: string) => {
+const sendOTP = async (email: string, name: string) => {
   const user = await User.findOne({ email: email });
   if (!user) {
     throw new AppError(400, "User not found");

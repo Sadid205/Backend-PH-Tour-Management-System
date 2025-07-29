@@ -1,7 +1,7 @@
+//@typescript-eslint/no-explicit-any
 import { NextFunction, Request, Response } from "express";
 import { envVars } from "../config/env";
 import AppError from "../errorHelpers/AppErrors";
-import mongoose from "mongoose";
 import { handleDuplicateKeyError } from "../helpers/handleDuplicateError";
 import { handleCastError } from "../helpers/handleCastError";
 import { handleZodError } from "../helpers/handleZodError";
@@ -12,8 +12,7 @@ import { deleteImageFromCloudinary } from "../config/cloudinary.config";
 export const globalErrorHandler = async (
   err: any,
   req: Request,
-  res: Response,
-  next: NextFunction
+  res: Response
 ) => {
   if (req.file) {
     await deleteImageFromCloudinary(req.file.path);

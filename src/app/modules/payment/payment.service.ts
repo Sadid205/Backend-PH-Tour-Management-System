@@ -1,4 +1,5 @@
-import { content } from "pdfkit/js/page";
+// @typescript-eslint/no-explicit-any
+//no-empty
 import AppError from "../../errorHelpers/AppErrors";
 import { ISSLCommerz } from "../../sslCommerz/sslCommerz.interface";
 import { SSLService } from "../../sslCommerz/sslCommerz.service";
