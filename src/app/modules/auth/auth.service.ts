@@ -116,7 +116,9 @@ const setPassword = async (userId: string, plainPassword: string) => {
   }
   if (
     user.password &&
-    user.auths.some((providerObject) => providerObject.provider === "google")
+    user.auths.some(
+      (providerObject) => providerObject.provider === "credentials"
+    )
   ) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
