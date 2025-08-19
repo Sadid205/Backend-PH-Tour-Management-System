@@ -24,7 +24,11 @@ router.post("/login", auth_controller_1.AuthControllers.credentialsLogin);
 router.post("/refresh-token", auth_controller_1.AuthControllers.getNewAccessToken);
 router.post("/logout", auth_controller_1.AuthControllers.logout);
 router.post("/change-password", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.Role)), auth_controller_1.AuthControllers.changePassword);
-router.post("/reset-password", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.Role)), auth_controller_1.AuthControllers.resetPassword);
+// router.post(
+//   "/reset-password",
+//   checkAuth(...Object.values(Role)),
+//   AuthControllers.resetPassword
+// );
 router.post("/set-password", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.Role)), auth_controller_1.AuthControllers.setPassword);
 router.post("/forgot-password", auth_controller_1.AuthControllers.forgotPassword);
 // Frontend -> forgot-password -> email -> user status check -> short expiration token (valid for 10 min) -> email -> Frontend Link http://localhost:5073/reset-password?email=sadid@gmail.com&token=token -> frontend e query theke  user er email and token extract kore anbo -> new password user thek nibe -> backend er /reset-password api -> authorization = token -> newPassword -> token verify -> hash password-> save user password

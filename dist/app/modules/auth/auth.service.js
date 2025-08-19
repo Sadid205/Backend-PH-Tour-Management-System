@@ -113,7 +113,7 @@ const setPassword = (userId, plainPassword) => __awaiter(void 0, void 0, void 0,
         throw new AppErrors_1.default(404, "User not found");
     }
     if (user.password &&
-        user.auths.some((providerObject) => providerObject.provider === "google")) {
+        user.auths.some((providerObject) => providerObject.provider === "credentials")) {
         throw new AppErrors_1.default(http_status_codes_1.default.BAD_REQUEST, "You have already set your password. Now you can change the password from your profile password update");
     }
     if (user.auths.some((providerObject) => providerObject.provider === "google")) {
